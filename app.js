@@ -22,6 +22,8 @@ playerOneBtn.addEventListener("click", () => {
 			isGameOver = true;
 			p1Display.classList.add("winner");
 			p2Display.classList.add("loser");
+			playerOneBtn.disabled = true;
+			playerTwoBtn.disabled = true;
 		}
 		p1Display.innerText = p1Score;
 	}
@@ -34,6 +36,8 @@ playerTwoBtn.addEventListener("click", () => {
 			isGameOver = true;
 			p2Display.classList.add("winner");
 			p1Display.classList.add("loser");
+			playerOneBtn.disabled = true;
+			playerTwoBtn.disabled = true;
 		}
 		p2Display.innerText = p2Score;
 	}
@@ -49,4 +53,6 @@ function reset() {
 	p2Display.innerText = p2Score;
 	p1Display.classList.remove("winner", "loser");
 	p2Display.classList.remove("winner", "loser");
+	playerOneBtn.disabled = false;
+	playerTwoBtn.disabled = false;
 }
