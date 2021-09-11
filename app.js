@@ -48,5 +48,5 @@ function reset() {
 	p1Display.innerText = p1Score;
 	p2Display.innerText = p2Score;
 	p1Display.classList.remove("winner", "loser");
-	p2Display.classList.remove("loser", "loser");
+	p2Display.classList.remove("winner", "loser");
 }
