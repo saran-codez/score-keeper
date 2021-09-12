@@ -2,16 +2,19 @@ const playerOne = {
 	score: 0,
 	button: document.querySelector("#p1Button"),
 	display: document.querySelector("#p1Display"),
+	winMsg: "Player One wins.",
 };
 
 const playerTwo = {
 	score: 0,
 	button: document.querySelector("#p2Button"),
 	display: document.querySelector("#p2Display"),
+	winMsg: "Player Two wins.",
 };
 
 const resetBtn = document.querySelector("#resetButton");
 const scoreSelector = document.querySelector("#roundNumber");
+const winResult = document.querySelector("#result");
 let winningScore = 3;
 let isGameOver = false;
 
@@ -24,6 +27,8 @@ function updateScores(player, opponent) {
 			opponent.display.classList.add("has-text-danger");
 			player.button.disabled = true;
 			opponent.button.disabled = true;
+			winResult.innerText = player.winMsg;
+			winResult.classList.add("has-text-info");
 		}
 		player.display.innerText = player.score;
 	}
@@ -52,4 +57,6 @@ function reset() {
 		player.display.classList.remove("has-text-success", "has-text-danger");
 		player.button.disabled = false;
 	}
+	winResult.classList.remove("has-text-info");
+	winResult.innerText = "Use the buttons below to keep score.";
 }
