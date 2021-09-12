@@ -1,58 +1,55 @@
-const p1Display = document.querySelector("#p1Display");
-const p2Display = document.querySelector("#p2Display");
-const playerOneBtn = document.querySelector("#p1Button");
-const playerTwoBtn = document.querySelector("#p2Button");
+const playerOne = {
+	score: 0,
+	button: document.querySelector("#p1Button"),
+	display: document.querySelector("#p1Display"),
+};
+
+const playerTwo = {
+	score: 0,
+	button: document.querySelector("#p2Button"),
+	display: document.querySelector("#p2Display"),
+};
+
 const resetBtn = document.querySelector("#resetButton");
 const scoreSelector = document.querySelector("#roundNumber");
-
 let winningScore = 3;
 let isGameOver = false;
-let p1Score = 0;
-let p2Score = 0;
+
+function updateScores(player, opponent) {
+	if (!isGameOver) {
+		player.score += 1;
+		if (player.score === winningScore) {
+			isGameOver = true;
+			player.display.classList.add("has-text-success");
+			opponent.display.classList.add("has-text-danger");
+			player.button.disabled = true;
+			opponent.button.disabled = true;
+		}
+		player.display.innerText = player.score;
+	}
+}
 
 scoreSelector.addEventListener("change", () => {
 	winningScore = parseInt(scoreSelector.value);
 	reset();
 });
 
-playerOneBtn.addEventListener("click", () => {
-	if (!isGameOver) {
-		p1Score += 1;
-		if (p1Score === winningScore) {
-			isGameOver = true;
-			p1Display.classList.add("winner");
-			p2Display.classList.add("loser");
-			playerOneBtn.disabled = true;
-			playerTwoBtn.disabled = true;
-		}
-		p1Display.innerText = p1Score;
-	}
+playerOne.button.addEventListener("click", () => {
+	updateScores(playerOne, playerTwo);
 });
 
-playerTwoBtn.addEventListener("click", () => {
-	if (!isGameOver) {
-		p2Score += 1;
-		if (p2Score === winningScore) {
-			isGameOver = true;
-			p2Display.classList.add("winner");
-			p1Display.classList.add("loser");
-			playerOneBtn.disabled = true;
-			playerTwoBtn.disabled = true;
-		}
-		p2Display.innerText = p2Score;
-	}
+playerTwo.button.addEventListener("click", () => {
+	updateScores(playerTwo, playerOne);
 });
 
 resetBtn.addEventListener("click", reset);
 
 function reset() {
 	isGameOver = false;
-	p1Score = 0;
-	p2Score = 0;
-	p1Display.innerText = p1Score;
-	p2Display.innerText = p2Score;
-	p1Display.classList.remove("winner", "loser");
-	p2Display.classList.remove("winner", "loser");
-	playerOneBtn.disabled = false;
-	playerTwoBtn.disabled = false;
+	for (const player of [playerOne, playerTwo]) {
+		player.score = 0;
+		player.display.innerText = player.score;
+		player.display.classList.remove("has-text-success", "has-text-danger");
+		player.button.disabled = false;
+	}
 }
